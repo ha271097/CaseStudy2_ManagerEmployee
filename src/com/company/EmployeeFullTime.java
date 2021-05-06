@@ -5,12 +5,19 @@ public class EmployeeFullTime extends Employee implements CalculateSalary {
     private double bonus;
     private double penalty;
 
-    public EmployeeFullTime(String name, String address, String phone, String email, int age, boolean status, double salary, double bonus, double penalty) {
-        super(name, address, phone, email, age, status);
+    public EmployeeFullTime(double salary, double bonus, double penalty) {
         this.salary = salary;
         this.bonus = bonus;
         this.penalty = penalty;
     }
+
+    public EmployeeFullTime(String name, String address, String phone, String email, String cmnd, int age, boolean status, double salary, double bonus, double penalty) {
+        super(name, address, phone, email, cmnd, age, status);
+        this.salary = salary;
+        this.bonus = bonus;
+        this.penalty = penalty;
+    }
+
 
     public double getSalary() {
         return salary;

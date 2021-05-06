@@ -8,10 +8,26 @@ public class EmployeePartTime extends Employee implements CalculateSalary {
         this.time = time;
     }
 
-    public EmployeePartTime(String name, String address, String phone, String email, int age, boolean status, float time) {
-        super(name, address, phone, email, age, status);
+    public EmployeePartTime(String name, String address, String phone, String email, String cmnd, int age, boolean status, float time) {
+        super(name, address, phone, email, cmnd, age, status);
         this.time = time;
     }
+
+    public EmployeePartTime() {
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public void setTime(float time) {
+        this.time = time;
+    }
+
+    public double getPRICE_TIME() {
+        return PRICE_TIME;
+    }
+
 
     @Override
     public double calculateSalary() {

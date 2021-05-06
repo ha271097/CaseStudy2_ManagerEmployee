@@ -5,17 +5,19 @@ public class Employee {
     private String address;
     private String phone;
     private String email;
+    private String cmnd;
     private int age;
     private boolean status;
 
     public Employee() {
     }
 
-    public Employee(String name, String address, String phone, String email, int age, boolean status) {
+    public Employee(String name, String address, String phone, String email, String cmnd, int age, boolean status) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.cmnd = cmnd;
         this.age = age;
         this.status = status;
     }
@@ -66,6 +68,14 @@ public class Employee {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getCmnd() {
+        return cmnd;
+    }
+
+    public void setCmnd(String cmnd) {
+        this.cmnd = cmnd;
     }
 
     @Override

@@ -5,9 +5,8 @@ import java.util.Scanner;
 
 public class Control {
     private final Scanner SCANNER = new Scanner(System.in);
-
     // Hiện thị nhâm viên  và nhân viên theo trang thái
-    public void displayListEmployeeTrue(int num, ArrayList<Employee> listEmployee){
+    public void displayListEmployee(int num, ArrayList<Employee> listEmployee){
         for (Employee employee: listEmployee
              ) {
             if(employee.isStatus() && num == 1) System.out.println(employee);
@@ -47,40 +46,141 @@ public class Control {
        }while (!check);
     }
     //Thêm nhân viên
-    public Employee addEmployee(){
-        EmployeeFullTime newEmployee = new EmployeeFullTime();
-        newEmployee.setName(writeName());
-        newEmployee.setAddress(writeAddress());
-        newEmployee.setPhone(writePhone());
-        newEmployee.setEmail(writeEmail());
-        newEmployee.setAge(writeAge());
-        newEmployee.setStatus(writeStatus());
-        newEmployee.setSalary(writeSalary());
-        newEmployee.setBonus(writeBonus());
-        newEmployee.setPenalty(writePenalty());
-        return newEmployee;
+    public Employee addEmployee(ArrayList<Employee> listEmployee){
+        System.out.println("Select type employee: " + "\n" + "Number 1: Employee Full Time." + "\n" + "Number 2: Employee Part Time." );
+        switch ( SCANNER.nextInt()){
+            case 1:
+                EmployeeFullTime newEmployeeFullTime = new EmployeeFullTime();
+                String inputFullTime;
+                boolean checkFullTime = true;
+                boolean checkRegexFullTime;
+                do {
+                    inputFullTime = writeName();
+                    checkRegexFullTime = regexName(inputFullTime);
+                }while (!checkRegexFullTime);
+                newEmployeeFullTime.setName(inputFullTime);
+                do {
+                    inputFullTime = writeAddress();
+                    if(inputFullTime.equals("")) {
+                        System.out.println("Not Empty --- Please enter: ");
+                    }
+                }while(inputFullTime.equals(""));
+                newEmployeeFullTime.setAddress(inputFullTime);
+                do {
+                    inputFullTime = writePhone();
+                    checkFullTime = checkInfo(inputFullTime, listEmployee);
+                    if(!checkFullTime) System.out.println("Phone exist --- Please enter again: ");
+                    checkRegexFullTime = regexPhone(inputFullTime);
+                }while (checkFullTime && !checkRegexFullTime);
+                newEmployeeFullTime.setPhone("+" + inputFullTime);
+                do {
+                    inputFullTime = writeEmail();
+                    checkFullTime = checkInfo(inputFullTime, listEmployee);
+                    if(!checkFullTime) System.out.println("Email exist --- Please enter again: ");
+                    checkRegexFullTime = regexEmail(inputFullTime);
+                }while (checkFullTime && !checkRegexFullTime);
+                newEmployeeFullTime.setEmail(inputFullTime);
+                do {
+                    inputFullTime = writeCmnd();
+                    checkFullTime = checkInfo(inputFullTime,listEmployee);
+                    if(!checkFullTime) System.out.println("Cmnd exist --- Please enter again: ");
+                    checkRegexFullTime = regexCmnd(inputFullTime);
+                }while (checkFullTime && !checkRegexFullTime);
+                newEmployeeFullTime.setCmnd(inputFullTime);
+                newEmployeeFullTime.setAge(writeAge());
+                newEmployeeFullTime.setStatus(writeStatus());
+                newEmployeeFullTime.setSalary(writeSalary());
+                newEmployeeFullTime.setBonus(writeBonus());
+                newEmployeeFullTime.setPenalty(writePenalty());
+                return newEmployeeFullTime;
+            case 2:
+                EmployeePartTime newEmployeePartTime = new EmployeePartTime();
+                String inputPartTime;
+                boolean checkPartTime;
+                boolean checkRegexPartTime;
+                do {
+                    inputPartTime = writeName();
+                    checkRegexPartTime = regexName(inputPartTime);
+                }while (!checkRegexPartTime);
+                newEmployeePartTime.setName(inputPartTime);
+                do {
+                    inputPartTime = writeAddress();
+                    if(inputPartTime.equals("")) {
+                        System.out.println("Not Empty --- Please enter: ");
+                    }
+                }while(inputPartTime.equals(""));
+                newEmployeePartTime.setAddress(inputPartTime);
+                do {
+                    inputPartTime = writePhone();
+                    checkPartTime = checkInfo(inputPartTime, listEmployee);
+                    if(!checkPartTime) System.out.println("Phone exist --- Please enter again: ");
+                    checkRegexPartTime = regexPhone(inputPartTime);
+                }while (checkPartTime && !checkRegexPartTime);
+                newEmployeePartTime.setPhone("+" + inputPartTime);
+                do {
+                    inputPartTime = writeEmail();
+                    checkPartTime = checkInfo(inputPartTime, listEmployee);
+                    if(!checkPartTime) System.out.println("Email exist --- Please enter again: ");
+                    checkRegexPartTime = regexEmail(inputPartTime);
+                }while (checkPartTime && !checkRegexPartTime);
+                newEmployeePartTime.setEmail(inputPartTime);
+                do {
+                    inputPartTime = writeCmnd();
+                    checkPartTime = checkInfo(inputPartTime,listEmployee);
+                    if(!checkPartTime) System.out.println("Cmnd exist --- Please enter again: ");
+                    checkRegexPartTime = regexCmnd(inputPartTime);
+                }while (checkPartTime && !checkRegexPartTime);
+                newEmployeePartTime.setCmnd(inputPartTime);
+                newEmployeePartTime.setAge(writeAge());
+                newEmployeePartTime.setStatus(writeStatus());
+                newEmployeePartTime.setTime(writeTime());
+                return newEmployeePartTime;
+            default:
+                System.exit(0);
+                return null;
+        }
     }
+
 
     //Phương thức đặt thuộc tính của nhân viên
     public String writeName(){
+        Scanner name = new Scanner(System.in);
         System.out.println("Enter name: ");
-        return SCANNER.nextLine();
+        return name.nextLine();
     }
     public String writeAddress(){
+        Scanner address = new Scanner(System.in);
         System.out.println("Enter address: ");
-        return SCANNER.nextLine();
+        return address.nextLine();
     }
     public String writePhone(){
+        Scanner phone = new Scanner(System.in);
         System.out.println("Enter phone: ");
-        return SCANNER.nextLine();
+        System.out.println("Demo: //85-990-8989");
+        return phone.nextLine();
     }
     public String writeEmail(){
+        Scanner email = new Scanner( System.in);
         System.out.println("Enter email: ");
-        return SCANNER.nextLine();
+        System.out.println("Demo://employee@gmail.com ");
+        return email.nextLine();
+    }
+    public String writeCmnd(){
+        Scanner cmnd = new Scanner(System.in);
+        System.out.println("Enter cmnd: ");
+        return cmnd.nextLine();
     }
     public int writeAge(){
+        Scanner age = new Scanner(System.in);
         System.out.println("Enter age: ");
-        return SCANNER.nextInt();
+        while(!age.hasNextInt())
+        {
+            age = new Scanner(System.in);
+            System.out.println("Format age wrong --- Please enter agian: ");
+            System.out.println("Enter age: ");
+        }
+
+        return age.nextInt();
     }
     public boolean writeStatus(){
         System.out.println("Select one: " + "\n" + "Number 1 = True." + "\n" + "Number 2 = False");
@@ -113,5 +213,56 @@ public class Control {
     public float writeTime(){
         System.out.println("Enter time: ");
         return SCANNER.nextFloat();
+    }
+    // Check dữ liệu đã tồn tại hay chưa
+    public boolean checkInfo(String info, ArrayList<Employee> listEmployee) {
+        Employee employee;
+        employee = listEmployee.stream().filter(
+                o -> o.getName().equals(info)).findFirst().orElse(null);
+        if(employee == null) return true;
+        else return false;
+    }
+    //Regex định dạng các trường dữ liệu đầu vào
+    public boolean regexName (String name){
+        String regexName = "^[a-zA-Z]+[\\-'\\s]*[a-zA-Z ]+$";
+        if(name.matches(regexName)) return true;
+        else {
+            System.out.println("Format name wrong --- Please enter phone again: ");
+            return false;
+        }
+    }
+    public boolean regexPhone(String phone){
+        String regexPhone  = "^\\d{2}-\\d{3}-\\d{4}$";
+        if(phone.matches(regexPhone)) return true;
+        else {
+            System.out.println("Format phone wrong ---  Please enter phone a gain: ");
+            return false;
+        }
+    }
+    public boolean regexEmail(String email){
+        String regexEmail =  "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
+        if(email.matches(regexEmail)) return true;
+        else {
+            System.out.println("Format email wrong --- PLeasse enter email again: ");
+            return false;
+        }
+    }
+    public boolean regexCmnd(String cmnd){
+        String regexCmnd  = "^\\d{9}$";
+        if(cmnd.matches(regexCmnd)) return true;
+        else {
+            System.out.println("Format phone wrong ---  Please enter phone a gain: ");
+            return false;
+        }
+    }
+    // Cập nhật nhân viên
+    public void updateEmployee(ArrayList<Employee> listEmployee){
+        Scanner sc = new Scanner(System.in);
+        String name;
+        do {
+            System.out.println("Enter name update: ");
+            name = sc.nextLine();
+        }while (checkInfo(name,listEmployee));
+
     }
 }
