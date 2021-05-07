@@ -1,22 +1,29 @@
 package com.company;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Control {
     private final Scanner SCANNER = new Scanner(System.in);
+    ArrayList<Employee> listEmployee;
+
+    public Control(ArrayList<Employee> listEmployee) {
+        this.listEmployee = listEmployee;
+    }
+
     // Hiện thị nhâm viên  và nhân viên theo trang thái
-    public void displayListEmployee(int num, ArrayList<Employee> listEmployee){
+    public void displayListEmployee(int num){
         for (Employee employee: listEmployee
              ) {
             if(employee.isStatus() && num == 1) System.out.println(employee);
             else if(!employee.isStatus() && num == 2) System.out.println(employee);
-            else if (num == 3) System.out.println(employee);
+            else if (num == 3) {
+                if(employee instanceof EmployeePartTime && employee instanceof EmployeeFullTime) System.out.println(employee);
+            }
         }
     }
     // Tìm kiếm nhân viên:
-    public void searchEmployee(ArrayList<Employee> listEmployee){
+    public void searchEmployee(){
         Employee[] employees;
         do {
             System.out.println("Enter name: ");
@@ -32,7 +39,7 @@ public class Control {
         }
     }
     //Check trạng thái của nhân viên
-    public void statusOfEmployee(ArrayList<Employee> listEmployee){
+    public void statusOfEmployee(){
         boolean check = false;
        do {
            System.out.println("Enter name: ");
@@ -47,7 +54,7 @@ public class Control {
        }while (!check);
     }
     //Thêm nhân viên
-    public Employee addEmployee(ArrayList<Employee> listEmployee){
+    public Employee addEmployee(){
         System.out.println("Select type employee: " + "\n" + "Number 1: Employee Full Time." + "\n" + "Number 2: Employee Part Time." );
         switch ( SCANNER.nextInt()){
             case 1:
@@ -218,8 +225,8 @@ public class Control {
     // Check dữ liệu đã tồn tại hay chưa
     public boolean checkInfo(String info, ArrayList<Employee> listEmployee) {
         Employee employee;
-        employee = listEmployee.stream().filter(
-                o -> o.getName().equals(info)).findFirst().orElse(null);
+        employee = this.listEmployee.stream().filter(
+                o -> info.equals(o.getPhone())).findFirst().orElse(null);
         if(employee == null) return true;
         else return false;
     }
@@ -257,7 +264,7 @@ public class Control {
         }
     }
     // Cập nhật nhân viên
-    public void updateEmployee(ArrayList<Employee> listEmployee){
+    public void updateEmployee(){
         Scanner sc = new Scanner(System.in);
         String cmnd;
         boolean check = false;
